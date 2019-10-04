@@ -49,7 +49,7 @@ bool IsPointInTriangle( glm::vec3 q, glm::vec3 r, glm::vec3 s, glm::vec3 p )
     glm::vec3 nr = cross((s-r), (p-r));
     glm::vec3 ns = cross((q-s), (p-s));
 
-    if (dot(n, nq) > 0 && dot(n, nr) > 0 && dot(n, ns) > 0){
+    if (dot(n, nq) >= 0 && dot(n, nr) >= 0 && dot(n, ns) >= 0){
         return true;
     } else {
         return false;
@@ -75,19 +75,34 @@ void WhoAmI( std::string &yourName, std::string &yourEmailAddress )
 //THIS IS FOR TESTING PURPOSES ONLY
 int main(){
   
-  glm::vec3 a = glm::vec3(1, 2, 3);
-  glm::vec3 b = glm::vec3(2, 2, 2);
+  glm::vec3 a = glm::vec3(1, 1, 1);
+  glm::vec3 b = glm::vec3(2, 3, 4);
 
   glm::vec3 x = WhatPartOfALivesInBDir(a, b);
-  //std::cout << x.x << x.y << x.z << std::endl;
+  std::cout << x.x << " " << x.y << " " << x.z << std::endl;
   
   x = WhatPartOfALivesPerpToB(a, b);
-  //std::cout << x.x << x.y << x.z << std::endl;
+  std::cout << x.x << " " << x.y << " " << x.z << std::endl;
 
   glm::vec3 c = glm::vec3(7, 8, 9);  
-    
-  x = UnitSurfaceNormal(a, b, c);
-  //std::cout << x.x << x.y << x.z << std::endl;
+  glm::vec3 d = glm::vec3(8, 4, 10); 
 
-  Area(a, b, c);
+  x = UnitSurfaceNormal(a, b, c);
+  std::cout << "unitsurface: " << x.x << " " << x.y << " " << x.z << std::endl;
+  
+  float y;
+  y = Area(a, b, c);
+  std::cout << y << std::endl;
+  
+  bool t;
+  t = IsPointInTriangle(a, b, c, d);
+
+  if (t == true){
+    std::cout << "true" << std::endl;
+  } else {
+    std::cout << "false" << std::endl;
+  }
+
+  y = DistanceFromPointToPlane(a, b, c, d);
+  std::cout << y << std::endl;
 }
